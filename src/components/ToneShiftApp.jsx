@@ -6,15 +6,12 @@ import { ToneSelector } from "./ToneSelector";
 import { ToneDescription } from "./ToneDescription";
 import { InputPanel, OutputPanel } from "./EditorPanel";
 import { ActionBar } from "./ActionBar";
+import { LuBrainCircuit, LuShieldCheck, LuZap } from "react-icons/lu";
 
-// Quick-load example texts
 const EXAMPLES = {
-  general:
-    "I worked really hard on this project and I think it went really well. We tried a lot of new things and got some good results. It was tough sometimes but we figured it out in the end. I want to keep working on stuff like this because I feel like I'm getting better.",
-  story:
-    "I lost my job during the pandemic. I had no savings, two kids, and a mortgage. For three months I couldn't sleep. Then I decided to start something of my own. It was the hardest and best decision I ever made.",
-  advice:
-    "The best way to improve your writing is to read more. Read different genres and styles. Pay attention to how sentences are structured. Write every day, even if it's just a few sentences. Over time the improvement is undeniable.",
+  general: "I worked really hard on this project and I think it went really well. We tried a lot of new things and got some good results...",
+  story: "I lost my job during the pandemic. I had no savings, two kids, and a mortgage. For three months I couldn't sleep...",
+  advice: "The best way to improve your writing is to read more. Read different genres and styles. Pay attention to how sentences are structured...",
 };
 
 export function ToneShiftApp() {
@@ -26,7 +23,6 @@ export function ToneShiftApp() {
 
   const activeToneConfig = TONE_CONFIG.find((t) => t.key === activeTone);
 
-  // Run transform
   const handleTransform = useCallback(() => {
     if (!input.trim()) return;
     setIsLoading(true);
@@ -38,7 +34,6 @@ export function ToneShiftApp() {
     }, 80);
   }, [input, activeTone]);
 
-  // Select tone — auto re-transform if output exists
   const handleToneSelect = (key) => {
     setActiveTone(key);
     if (input.trim() && hasOutput) {
@@ -56,33 +51,32 @@ export function ToneShiftApp() {
     setHasOutput(false);
   };
 
-  const handleInputChange = (val) => {
-    setInput(val);
-  };
-
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#07070d",
-        color: "#eeeef8",
-        fontFamily:
-          "'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        background: "#0B0F19",
+        color: "#F3F4F6",
         position: "relative",
         overflowX: "hidden",
       }}
     >
-      {/* Ambient glow blobs */}
+      {/* Sleek Grid Background */}
       <div
         aria-hidden="true"
-        style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}
-      >
-        <div style={{ position: "absolute", top: "5%", left: "8%", width: 500, height: 500, background: "radial-gradient(circle, rgba(124,110,240,0.10) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)" }} />
-        <div style={{ position: "absolute", bottom: "8%", right: "5%", width: 400, height: 400, background: "radial-gradient(circle, rgba(232,108,187,0.08) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)" }} />
-        <div style={{ position: "absolute", top: "50%", left: "50%", width: 300, height: 300, background: "radial-gradient(circle, rgba(78,205,196,0.06) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", transform: "translate(-50%,-50%)" }} />
-      </div>
+        style={{
+          position: "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 0,
+          backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+          maskImage: "radial-gradient(ellipse at center, black 20%, transparent 80%)",
+          WebkitMaskImage: "radial-gradient(ellipse at center, black 20%, transparent 80%)",
+        }}
+      />
 
-      {/* Main content */}
       <div
         style={{
           position: "relative",
@@ -92,96 +86,96 @@ export function ToneShiftApp() {
           padding: "0 20px 60px",
         }}
       >
-        {/* ── HEADER ── */}
         <header
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             padding: "24px 0 16px",
-            borderBottom: "1px solid #252540",
-            marginBottom: "4px",
+            borderBottom: "1px solid #1F2937",
+            marginBottom: "20px",
           }}
         >
           <div
             style={{
-              fontFamily: "'Syne', 'DM Sans', sans-serif",
               fontWeight: 800,
-              fontSize: "22px",
+              fontSize: "20px",
               letterSpacing: "-0.5px",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px"
             }}
           >
-            Tone<span style={{ color: "#7c6ef0" }}>Shift</span>
-            <span style={{ color: "#e86cbb" }}>.</span>
+            <LuZap size={22} color="#6366F1" fill="#6366F1" />
+            <span>Tone<span style={{ color: "#6366F1" }}>Shift</span></span>
           </div>
           <div
             style={{
-              fontFamily: "monospace",
+              fontFamily: "'JetBrains Mono', monospace",
               fontSize: "11px",
-              letterSpacing: "1.5px",
-              padding: "4px 12px",
-              border: "1px solid #2e2e50",
-              borderRadius: "99px",
-              color: "#606090",
-              background: "#0f0f1a",
+              letterSpacing: "1px",
+              padding: "6px 12px",
+              border: "1px solid #374151",
+              borderRadius: "6px",
+              color: "#9CA3AF",
+              background: "#111827",
             }}
           >
-            NO AI API · RULE-BASED
+            LOCAL ENGINE
           </div>
         </header>
 
-        {/* ── HERO ── */}
-        <div style={{ textAlign: "center", padding: "44px 0 36px" }}>
+        <div style={{ textAlign: "center", padding: "40px 0 48px" }}>
           <h1
             style={{
-              fontFamily: "'Syne', 'DM Sans', sans-serif",
               fontWeight: 800,
-              fontSize: "clamp(34px, 6.5vw, 60px)",
-              lineHeight: 1.08,
-              letterSpacing: "-2px",
-              background: "linear-gradient(135deg, #eeeef8 0%, #a0a0d8 45%, #e86cbb 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              fontSize: "clamp(36px, 6vw, 56px)",
+              lineHeight: 1.1,
+              letterSpacing: "-1.5px",
+              color: "#F9FAFB",
               margin: 0,
             }}
           >
-            Transform Any Text
-            <br />
-            To Any Tone
+            Adapt Your Text.<br />
+            <span style={{ 
+              background: "linear-gradient(135deg, #6366F1 0%, #A855F7 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}>Keep Your Privacy.</span>
           </h1>
           <p
             style={{
-              marginTop: "14px",
-              color: "#606090",
+              marginTop: "16px",
+              color: "#9CA3AF",
               fontSize: "16px",
-              fontWeight: 300,
-              letterSpacing: "0.2px",
+              maxWidth: "500px",
+              margin: "16px auto 0",
+              lineHeight: 1.5,
             }}
           >
-            Platform-native formatting & vocabulary — zero API calls, fully browser-side.
+            Platform-native formatting & vocabulary entirely in your browser. Zero API calls.
           </p>
 
-          {/* Example loaders */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
-              marginTop: "18px",
+              marginTop: "24px",
               flexWrap: "wrap",
             }}
           >
             <span
               style={{
-                fontFamily: "monospace",
+                fontFamily: "'JetBrains Mono', monospace",
                 fontSize: "11px",
-                color: "#606090",
+                color: "#6B7280",
                 letterSpacing: "1px",
+                marginRight: "4px"
               }}
             >
-              TRY:
+              LOAD EXAMPLE:
             </span>
             {Object.keys(EXAMPLES).map((key) => (
               <button
@@ -193,59 +187,39 @@ export function ToneShiftApp() {
                 }}
                 style={{
                   padding: "6px 14px",
-                  borderRadius: "99px",
-                  border: "1px solid #252540",
-                  background: "#0f0f1a",
-                  color: "#606090",
-                  fontSize: "12px",
+                  borderRadius: "6px",
+                  border: "1px solid #374151",
+                  background: "#111827",
+                  color: "#D1D5DB",
+                  fontSize: "13px",
                   cursor: "pointer",
                   textTransform: "capitalize",
-                  transition: "all 0.18s",
-                  fontFamily: "inherit",
+                  transition: "all 0.2s",
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#eeeef8";
-                  e.currentTarget.style.borderColor = "#2e2e50";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "#606090";
-                  e.currentTarget.style.borderColor = "#252540";
-                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = "#1F2937"}
+                onMouseLeave={(e) => e.currentTarget.style.background = "#111827"}
               >
-                {key} text
+                {key}
               </button>
             ))}
           </div>
         </div>
 
-        {/* ── TONE SELECTOR ── */}
         <ToneSelector activeTone={activeTone} onSelect={handleToneSelect} />
-
-        {/* ── ACTIVE TONE DESCRIPTION ── */}
         <ToneDescription config={activeToneConfig} />
 
-        {/* ── EDITOR ROW ── */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "16px",
-            marginBottom: "16px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "20px",
+            marginBottom: "20px",
           }}
         >
-          <InputPanel
-            value={input}
-            onChange={handleInputChange}
-            onTransform={handleTransform}
-          />
-          <OutputPanel
-            value={output}
-            isLoading={isLoading}
-            toneConfig={activeToneConfig}
-          />
+          <InputPanel value={input} onChange={setInput} onTransform={handleTransform} />
+          <OutputPanel value={output} isLoading={isLoading} toneConfig={activeToneConfig} />
         </div>
 
-        {/* ── ACTIONS ── */}
         <ActionBar
           onTransform={handleTransform}
           onClear={handleClear}
@@ -254,64 +228,63 @@ export function ToneShiftApp() {
           isLoading={isLoading}
         />
 
-        {/* ── HOW IT WORKS ── */}
+        {/* How it works */}
         <div
           style={{
-            padding: "24px",
-            background: "#0f0f1a",
-            border: "1px solid #252540",
-            borderRadius: "20px",
+            padding: "32px",
+            background: "#111827",
+            border: "1px solid #1F2937",
+            borderRadius: "16px",
           }}
         >
           <h2
             style={{
-              fontFamily: "'Syne', 'DM Sans', sans-serif",
               fontSize: "18px",
               fontWeight: 700,
-              marginBottom: "16px",
-              letterSpacing: "-0.5px",
+              marginBottom: "24px",
+              color: "#F3F4F6"
             }}
           >
-            How it works
+            Under the Hood
           </h2>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "12px",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gap: "20px",
             }}
           >
             {[
               {
-                icon: "🧠",
+                icon: <LuBrainCircuit size={28} color="#6366F1" />,
                 title: "NLP Rules Engine",
-                desc: "Sentence parsing, vocabulary substitution maps, and structural templates — no black box, no API.",
+                desc: "Sentence parsing, vocabulary substitution maps, and structural templates—no black box.",
               },
               {
-                icon: "🔒",
+                icon: <LuShieldCheck size={28} color="#10B981" />,
                 title: "100% Private",
-                desc: "Your text never leaves the browser. No API calls, no logging, no tracking whatsoever.",
+                desc: "Your text never leaves the browser. No API calls, no logging, no tracking.",
               },
               {
-                icon: "⚡",
+                icon: <LuZap size={28} color="#F59E0B" />,
                 title: "Instant Results",
-                desc: "Transformations run client-side in milliseconds. No latency, no quota, no cost.",
+                desc: "Transformations run client-side in milliseconds. No latency, no cost.",
               },
             ].map((item) => (
               <div
                 key={item.title}
                 style={{
-                  padding: "16px",
-                  background: "#151525",
-                  borderRadius: "10px",
-                  border: "1px solid #252540",
+                  padding: "20px",
+                  background: "#1F2937",
+                  borderRadius: "12px",
+                  border: "1px solid #374151",
                 }}
               >
-                <div style={{ fontSize: "24px", marginBottom: "8px" }}>{item.icon}</div>
-                <div style={{ fontWeight: 600, fontSize: "14px", marginBottom: "5px" }}>
+                <div style={{ marginBottom: "12px" }}>{item.icon}</div>
+                <div style={{ fontWeight: 600, fontSize: "15px", marginBottom: "8px", color: "#F9FAFB" }}>
                   {item.title}
                 </div>
-                <div style={{ fontSize: "13px", color: "#606090", lineHeight: 1.6 }}>
+                <div style={{ fontSize: "14px", color: "#9CA3AF", lineHeight: 1.6 }}>
                   {item.desc}
                 </div>
               </div>
@@ -319,22 +292,6 @@ export function ToneShiftApp() {
           </div>
         </div>
       </div>
-
-      {/* ── FOOTER ── */}
-      <footer
-        style={{
-          borderTop: "1px solid #252540",
-          padding: "20px",
-          textAlign: "center",
-          fontFamily: "monospace",
-          fontSize: "11px",
-          color: "#606090",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        ToneShift · 100% browser-based · No data sent anywhere · Built with Next.js
-      </footer>
     </div>
   );
 }

@@ -1,37 +1,41 @@
 "use client";
+import { getToneIcon } from "@/lib/icons"; // Adjust path as needed
 
 export function ToneDescription({ config }) {
   if (!config) return null;
+  const icon = getToneIcon(config.key);
 
   return (
     <div
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "12px",
-        padding: "12px 16px",
-        background: "#0f0f1a",
-        border: "1px solid #252540",
-        borderLeft: `3px solid ${config.color}`,
+        gap: "16px",
+        padding: "16px 20px",
+        background: "#111827",
+        border: "1px solid #1F2937",
+        borderLeft: `4px solid ${config.color || '#6366F1'}`,
         borderRadius: "8px",
-        marginBottom: "20px",
+        marginBottom: "24px",
       }}
     >
-      <span style={{ fontSize: "22px", flexShrink: 0 }}>{config.emoji}</span>
+      <span style={{ fontSize: "24px", color: config.color || '#6366F1', flexShrink: 0, display: "flex" }}>
+        {icon}
+      </span>
       <div>
         <div
           style={{
-            fontFamily: "monospace",
+            fontFamily: "'JetBrains Mono', monospace",
             fontSize: "11px",
-            fontWeight: 500,
-            color: config.color,
-            marginBottom: "3px",
+            fontWeight: 600,
+            color: config.color || '#6366F1',
+            marginBottom: "4px",
             letterSpacing: "0.5px",
           }}
         >
           {config.label.toUpperCase()}
         </div>
-        <div style={{ fontSize: "13px", color: "#b0b0d0", lineHeight: 1.5 }}>
+        <div style={{ fontSize: "14px", color: "#9CA3AF", lineHeight: 1.5 }}>
           {config.description}
         </div>
       </div>

@@ -2,31 +2,38 @@
 
 import { WordCount } from "./WordCount";
 import { CopyButton } from "./CopyButton";
+import { LuX } from "react-icons/lu";
+import { getToneIcon } from "@/lib/icons"; // Adjust path as needed
 
 const panelStyle = {
-  background: "#0f0f1a",
-  border: "1px solid #252540",
-  borderRadius: "14px",
+  background: "#111827",
+  border: "1px solid #1F2937",
+  borderRadius: "12px",
   overflow: "hidden",
   display: "flex",
   flexDirection: "column",
+  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
 };
 
 const headerStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "10px 14px",
-  borderBottom: "1px solid #252540",
-  background: "#151525",
+  padding: "12px 16px",
+  borderBottom: "1px solid #1F2937",
+  background: "#1F2937",
 };
 
 const headerLabel = {
-  fontFamily: "monospace",
+  fontFamily: "'JetBrains Mono', monospace",
   fontSize: "11px",
-  letterSpacing: "1.5px",
+  letterSpacing: "1px",
   textTransform: "uppercase",
-  color: "#606090",
+  color: "#9CA3AF",
+  fontWeight: 600,
+  display: "flex",
+  alignItems: "center",
+  gap: "8px"
 };
 
 export function InputPanel({ value, onChange, onTransform }) {
@@ -40,21 +47,27 @@ export function InputPanel({ value, onChange, onTransform }) {
     <div style={panelStyle}>
       <div style={headerStyle}>
         <span style={headerLabel}>Input Text</span>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <WordCount text={value} />
           {value && (
             <button
               onClick={() => onChange("")}
+              title="Clear input"
               style={{
                 background: "none",
                 border: "none",
-                fontSize: "12px",
-                color: "#606090",
+                display: "flex",
+                alignItems: "center",
+                color: "#6B7280",
                 cursor: "pointer",
-                padding: "0 2px",
+                padding: "4px",
+                borderRadius: "4px",
+                transition: "background 0.2s"
               }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "#374151"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
             >
-              ✕ clear
+              <LuX size={14} />
             </button>
           )}
         </div>
@@ -66,17 +79,17 @@ export function InputPanel({ value, onChange, onTransform }) {
         placeholder={"Paste or type your text here…\n\nTip: Press Ctrl+Enter to transform"}
         style={{
           flex: 1,
-          minHeight: "240px",
+          minHeight: "260px",
           background: "transparent",
           border: "none",
           outline: "none",
-          padding: "16px",
-          color: "#eeeef8",
+          padding: "20px",
+          color: "#F3F4F6",
           fontFamily: "inherit",
-          fontSize: "14px",
-          lineHeight: 1.75,
+          fontSize: "15px",
+          lineHeight: 1.6,
           resize: "vertical",
-          caretColor: "#7c6ef0",
+          caretColor: "#6366F1",
         }}
       />
     </div>
@@ -84,15 +97,16 @@ export function InputPanel({ value, onChange, onTransform }) {
 }
 
 export function OutputPanel({ value, isLoading, toneConfig }) {
-  const label = toneConfig
-    ? `${toneConfig.emoji} ${toneConfig.label} Output`
-    : "Output";
-
+  const icon = toneConfig ? getToneIcon(toneConfig.key) : null;
+  
   return (
-    <div style={{ ...panelStyle, opacity: isLoading ? 0.5 : 1, transition: "opacity 0.2s" }}>
+    <div style={{ ...panelStyle, opacity: isLoading ? 0.6 : 1, transition: "opacity 0.2s" }}>
       <div style={headerStyle}>
-        <span style={headerLabel}>{label}</span>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <span style={headerLabel}>
+          {icon && <span style={{ color: toneConfig.color }}>{icon}</span>}
+          {toneConfig ? `${toneConfig.label} Output` : "Output"}
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <WordCount text={value} />
           <CopyButton text={value} />
         </div>
@@ -100,14 +114,14 @@ export function OutputPanel({ value, isLoading, toneConfig }) {
       <div
         style={{
           flex: 1,
-          minHeight: "240px",
-          padding: "16px",
-          fontSize: "14px",
-          lineHeight: 1.75,
+          minHeight: "260px",
+          padding: "20px",
+          fontSize: "15px",
+          lineHeight: 1.6,
           overflowY: "auto",
           whiteSpace: "pre-wrap",
           wordBreak: "break-word",
-          color: value ? "#eeeef8" : "#606090",
+          color: value ? "#F3F4F6" : "#6B7280",
           fontStyle: value ? "normal" : "italic",
           fontFamily: "inherit",
         }}
