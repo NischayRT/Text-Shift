@@ -1,6 +1,7 @@
 # ToneShift — Text Tone Transformer
 
 > Transform any text into platform-native formats instantly. No AI API. No data sent. Fully browser-side.
+<img width="1535" height="872" alt="image" src="https://github.com/user-attachments/assets/b4cdb6d6-0050-47ef-9fb7-1dbc8e97aa3f" />
 
 ![ToneShift](https://text-tone-shift.vercel.app)
 
